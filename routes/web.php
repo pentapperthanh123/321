@@ -15,7 +15,14 @@ Route::get('/', function () {
     return view('master');
 });
 
-Auth::routes();
+//Authenticator
+Route::group(['namespace' => 'Auth'],function(){
+    Route::get('/login', 'LoginController@index')->name('login');
+    Route::post('/login', 'LoginController@login');
+    Route::get('/logout', 'LoginController@logout')->name('logout');
+    Route::get('/register', 'RegisterController@index')->name('register');
+    Route::post('/register', 'RegisterController@create');
+});
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -58,3 +65,7 @@ Route::get('/words/all', function (){
 Route::get('/words/edit', function (){
     return view('admin.words.edit');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
